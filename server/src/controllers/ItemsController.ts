@@ -1,8 +1,8 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import db from '../database/connection';
 
 export default class ItemsController {
-  async index(response: Response) {
+  async index(request: Request, response: Response) {
     const items = await db('items').select('*');
 
     const serializedItems = items.map((item) => {
@@ -13,6 +13,6 @@ export default class ItemsController {
       };
     });
 
-    return response.json(serializedItems);
+    return response.status(200).json(serializedItems);
   }
 }

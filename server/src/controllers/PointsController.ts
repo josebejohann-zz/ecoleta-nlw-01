@@ -17,7 +17,7 @@ export default class PointsController {
     const trx = await db.transaction();
 
     try {
-      const insertedIds = await trx('points').insert({
+      const point = {
         image: 'image-fake',
         name,
         email,
@@ -26,7 +26,9 @@ export default class PointsController {
         longitude,
         city,
         uf,
-      });
+      };
+
+      const insertedIds = await trx('points').insert(point);
 
       const point_id = insertedIds[0];
 
@@ -41,13 +43,53 @@ export default class PointsController {
 
       await trx.commit();
 
-      return response.status(201).send();
+      return response.status(201).json({
+        id: point_id,
+        ...point,
+      });
     } catch (err) {
       await trx.rollback();
+
+      console.log(err);
 
       return response
         .status(400)
         .send({ error: 'Error while trying to create a new point.' });
     }
+  }
+
+  async index(request: Request, response: Response) {
+    const { city, uf, items } = request.query;
+
+    const parsedItems = String(items)
+      .split(',')
+      .map((item) => Number(item.trim()));
+
+    const points = await db('points')
+      .join('point_items', 'points.id', '=', 'point_items.point_id')
+      .whereIn('point_items.item_id', parsedItems)
+      .where('city', String(city))
+      .where('uf', String(uf))
+      .distinct()
+      .select('points.*');
+
+    return response.status(200).json(points);
+  }
+
+  async show(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const point = await db('points').where('id', '=', id).first();
+
+    if (!point) {
+      return response.status(400).json({ error: 'Point not found.' });
+    }
+
+    const items = await db('items')
+      .join('point_items', 'items.id', '=', 'point_items.item_id')
+      .where('point_items.point_id', '=', id)
+      .select('items.title');
+
+    return response.status(200).json({ point, items });
   }
 }
