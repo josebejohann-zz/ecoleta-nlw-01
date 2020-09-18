@@ -10,13 +10,11 @@ import Logo from '../../assets/logo.svg';
 import api from '../../services/api';
 
 import './styles.css';
-
 interface Item {
   id: number;
   title: string;
   image_url: string;
 }
-
 interface IBGEResponse {
   nome: string;
   sigla: string;
@@ -86,8 +84,6 @@ const CreatePoint = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
 
-      console.log(position.coords);
-
       setInitialPosition([latitude, longitude]);
     });
   }, []);
@@ -146,13 +142,9 @@ const CreatePoint = () => {
       items,
     };
 
-    try {
-      await api.post('points', data);
+    await api.post('/points', data);
 
-      history.push('/');
-    } catch (err) {
-      console.log(err);
-    }
+    history.push('/');
   }
 
   return (
