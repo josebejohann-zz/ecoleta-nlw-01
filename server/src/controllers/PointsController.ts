@@ -4,13 +4,14 @@ import db from '../database/connection';
 export default class PointsController {
   async create(request: Request, response: Response) {
     const {
+      image,
       name,
       email,
       whatsapp,
       latitude,
       longitude,
+      state,
       city,
-      uf,
       items,
     } = request.body;
 
@@ -18,14 +19,14 @@ export default class PointsController {
 
     try {
       const point = {
-        image: 'image-fake',
+        image,
         name,
         email,
         whatsapp,
         latitude,
         longitude,
+        state,
         city,
-        uf,
       };
 
       const insertedIds = await trx('points').insert(point);
@@ -59,7 +60,7 @@ export default class PointsController {
   }
 
   async index(request: Request, response: Response) {
-    const { city, uf, items } = request.query;
+    const { state, city, items } = request.query;
 
     const parsedItems = String(items)
       .split(',')
@@ -68,8 +69,8 @@ export default class PointsController {
     const points = await db('points')
       .join('point_items', 'points.id', '=', 'point_items.point_id')
       .whereIn('point_items.item_id', parsedItems)
+      .where('state', String(state))
       .where('city', String(city))
-      .where('uf', String(uf))
       .distinct()
       .select('points.*');
 
