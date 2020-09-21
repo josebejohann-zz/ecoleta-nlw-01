@@ -4,7 +4,6 @@ import db from '../database/connection';
 export default class PointsController {
   async create(request: Request, response: Response) {
     const {
-      image,
       name,
       email,
       whatsapp,
@@ -19,7 +18,7 @@ export default class PointsController {
 
     try {
       const point = {
-        image,
+        image: request.file.filename,
         name,
         email,
         whatsapp,
@@ -33,12 +32,15 @@ export default class PointsController {
 
       const point_id = insertedIds[0];
 
-      const pointItems = items.map((item_id: number) => {
-        return {
-          item_id,
-          point_id,
-        };
-      });
+      const pointItems = items
+        .split(',')
+        .map((item: string) => Number(item.trim()))
+        .map((item_id: number) => {
+          return {
+            item_id,
+            point_id,
+          };
+        });
 
       await trx('point_items').insert(pointItems);
 
@@ -74,7 +76,15 @@ export default class PointsController {
       .distinct()
       .select('points.*');
 
-    return response.status(200).json(points);
+    const serializedPoints = points.map((point) => {
+      return {
+        ...point,
+        image_web_url: `http://localhost:3333/uploads/${point.image}`,
+        image_mobile_url: `http://10.0.2.2:3333/uploads/${point.image}`,
+      };
+    });
+
+    return response.status(200).json(serializedPoints);
   }
 
   async show(request: Request, response: Response) {
@@ -86,11 +96,17 @@ export default class PointsController {
       return response.status(400).json({ error: 'Point not found.' });
     }
 
+    const serializedPoint = {
+      ...point,
+      image_web_url: `http://localhost:3333/uploads/${point.image}`,
+      image_mobile_url: `http://10.0.2.2:3333/uploads/${point.image}`,
+    };
+
     const items = await db('items')
       .join('point_items', 'items.id', '=', 'point_items.item_id')
       .where('point_items.point_id', '=', id)
       .select('items.title');
 
-    return response.status(200).json({ point, items });
+    return response.status(200).json({ serializedPoint, items });
   }
 }
