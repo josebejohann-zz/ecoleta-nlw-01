@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="Ecoleta" title="Ecoleta" src="https://raw.githubusercontent.com/rocketseat-education/nlw-01-ominstack/master/.github/ecoleta.png" width="220px" />
+    <img alt="Ecoleta" title="Ecoleta" src="https://raw.githubusercontent.com/rocketseat-education/nlw-01-ominstack/master/.github/ecoleta.svg" width="220px" />
 </h1>
 
 <p align="center">
@@ -17,7 +17,7 @@
 <br>
 
 <p align="center">
-  <img alt="Ecoleta" src="https://raw.githubusercontent.com/rocketseat-education/nlw-01-ominstack/master/.github/ecoleta.svg" width="100%">
+  <img alt="Ecoleta" src="https://raw.githubusercontent.com/rocketseat-education/nlw-01-ominstack/master/.github/ecoleta.png" width="100%">
 </p>
 
 ## 🚀 Tecnologias
