@@ -14,8 +14,9 @@ interface Params {
 }
 
 interface Data {
-  point: {
+  serializedPoint: {
     image: string;
+    image_mobile_url: string;
     name: string;
     email: string;
     whatsapp: string;
@@ -41,18 +42,18 @@ const Detail = () => {
     });
   }, []);
 
-  if (!data.point) {
-    return null;
-  }
-
   function handleNavigateBack() {
     navigation.goBack();
   }
 
   function handleWhatsApp() {
     Linking.openURL(
-      `whatsapp://send?phone=${data.point.whatsapp}&text=Quero saber mais sobre a coleta de resíduos!`,
+      `whatsapp://send?phone=${data.serializedPoint.whatsapp}&text=Quero saber mais sobre a coleta de resíduos!`,
     );
+  }
+
+  if (!data.serializedPoint) {
+    return null;
   }
 
   return (
@@ -62,16 +63,19 @@ const Detail = () => {
           <Feather name="arrow-left" size={20} color="#34CB79" />
         </TouchableOpacity>
 
-        <Image style={styles.pointImage} source={{uri: data.point.image}} />
+        <Image
+          style={styles.pointImage}
+          source={{uri: data.serializedPoint.image_mobile_url}}
+        />
 
-        <Text style={styles.pointName}>{data.point.name}</Text>
+        <Text style={styles.pointName}>{data.serializedPoint.name}</Text>
         <Text style={styles.pointItems}>
           {data.items.map((item) => item.title).join(', ')}
         </Text>
         <View style={styles.address}>
           <Text style={styles.addressTitle}>Endereço</Text>
           <Text style={styles.addressContent}>
-            {data.point.city}, {data.point.state}
+            {data.serializedPoint.city}, {data.serializedPoint.state}
           </Text>
         </View>
       </View>

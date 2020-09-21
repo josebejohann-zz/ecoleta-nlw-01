@@ -22,13 +22,14 @@ import styles from './styles';
 interface Item {
   id: number;
   title: string;
-  image_url: string;
+  image_mobile_url: string;
 }
 
 interface Point {
   id: number;
   name: string;
   image: string;
+  image_mobile_url: string;
   latitude: number;
   longitude: number;
 }
@@ -152,7 +153,7 @@ const Points = () => {
                     <Image
                       style={styles.mapMarkerImage}
                       source={{
-                        uri: point.image,
+                        uri: point.image_mobile_url,
                       }}
                     />
                     <Text style={styles.mapMarkerTitle}>{point.name}</Text>
@@ -174,7 +175,7 @@ const Points = () => {
             ]}
             onPress={() => handleSelectItem(item.id)}
             activeOpacity={0.6}>
-            <SvgUri width={42} height={42} uri={item.image_url} />
+            <SvgUri width={42} height={42} uri={item.image_mobile_url} />
             <Text style={styles.itemTitle}>{item.title}</Text>
           </TouchableOpacity>
         ))}
