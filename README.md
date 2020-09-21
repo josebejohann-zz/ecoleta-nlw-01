@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="Ecoleta" title="Ecoleta" src=".github/ecoleta.svg" width="220px" />
+    <img alt="Ecoleta" title="Ecoleta" src="https://raw.githubusercontent.com/rocketseat-education/nlw-01-ominstack/master/.github/ecoleta.png" width="220px" />
 </h1>
 
 <p align="center">
@@ -11,8 +11,6 @@
 </p>
 
 <p align="center">
- <img src="https://raw.githubusercontent.com/rocketseat-education/nlw-01-ominstack/master/.github/ecoleta.png" alt="PRs welcome!" />
-
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=7159c1&labelColor=000000">
 </p>
 
