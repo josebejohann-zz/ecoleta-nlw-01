@@ -115,10 +115,12 @@ const CreatePoint = () => {
   }
 
   function handleSelectItem(id: number) {
-    const alreadySelected = selectedItems.findIndex((item) => item === id);
+    const alreadySelected = selectedItems.findIndex(
+      (item: number) => item === id
+    );
 
     if (alreadySelected >= 0) {
-      const filteredItems = selectedItems.filter((item) => item !== id);
+      const filteredItems = selectedItems.filter((item: number) => item !== id);
 
       setSelectedItems(filteredItems);
     } else {
@@ -236,7 +238,7 @@ const CreatePoint = () => {
                 onChange={handleSelectState}
               >
                 <option value="0">Selecione um Estado</option>
-                {states.map((state) => (
+                {states.map((state: string) => (
                   <option key={state} value={state}>
                     {state}
                   </option>
@@ -252,7 +254,7 @@ const CreatePoint = () => {
                 onChange={handleSelectCity}
               >
                 <option value="0">Selecione uma cidade</option>
-                {cities.map((city) => (
+                {cities.map((city: string) => (
                   <option key={city} value={city}>
                     {city}
                   </option>
@@ -270,7 +272,7 @@ const CreatePoint = () => {
           </legend>
 
           <ul className="items-grid">
-            {items.map((item) => (
+            {items.map((item: any) => (
               <li
                 key={item.id}
                 onClick={() => handleSelectItem(item.id)}

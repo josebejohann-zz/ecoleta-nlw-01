@@ -8,7 +8,6 @@
     "@testing-library/user-event": "^7.1.2",
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/styled-components": "^5.1.3",
     "axios": "^0.20.0",
@@ -49,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react": "^16.9.49",
     "@types/react-leaflet": "^2.5.2",
     "@types/react-router-dom": "^5.1.5"
   }
